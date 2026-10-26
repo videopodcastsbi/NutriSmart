@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masuk &amp; Daftar — NutriSmart</title>
+  <meta name="description" content="Masuk atau buat akun NutriSmart untuk merencanakan menu gizi seimbang keluarga Indonesia berbasis AKG." />
+  <meta name="theme-color" content="#0f9d63" />
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <script>document.documentElement.dataset.theme = localStorage.getItem('ns_theme') || 'light';</script>
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: radial-gradient(circle at 10% 20%, rgba(15, 157, 99, 0.08), transparent 45%),
+                  radial-gradient(circle at 90% 80%, rgba(255, 122, 69, 0.07), transparent 45%),
+                  var(--bg);
+    }
+    .auth-nav {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .auth-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 48px;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface-solid);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--brand-grad);
+    }
+    .auth-tabs {
+      display: flex;
+      background: var(--surface-3);
+      border-radius: 999px;
+      padding: 4px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+    }
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 9px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-2);
+      border-radius: 999px;
+      border: 0;
+      background: transparent;
+      transition: all 0.2s var(--ease);
+      cursor: pointer;
+    }
+    .auth-tab.active {
+      background: var(--surface-solid);
+      color: var(--text);
+      box-shadow: var(--shadow-sm);
+    }
+    .auth-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .auth-header h1 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .auth-header p {
+      font-size: 14px;
+      color: var(--text-3);
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .demo-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 20px 0;
+      color: var(--text-3);
+      font-size: 12.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .demo-divider::before, .demo-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border-strong);
+    }
+    .demo-divider span {
+      padding: 0 12px;
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13.5px;
+      color: var(--text-3);
+    }
+    .auth-footer a {
+      color: var(--brand);
+      font-weight: 600;
+    }
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+    .pwd-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-3);
+      padding: 4px;
+      display: grid;
+      place-items: center;
+    }
+    .pwd-toggle:hover {
+      color: var(--text);
+    }
+    .pwd-toggle svg {
+      width: 18px;
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <header class="auth-nav">
+    <a href="/" class="logo" aria-label="NutriSmart Beranda">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+      </span>
+      <span>Nutri<em>Smart</em></span>
+    </a>
+    <div class="flex items-center gap-2">
+      <button class="btn btn-ghost btn-icon btn-sm" id="theme-toggle" aria-label="Ganti tema terang/gelap">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+      </button>
+      <a href="/" class="btn btn-ghost btn-sm">Kembali ke Beranda</a>
+    </div>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-card fade-up">
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-login" type="button" role="tab" aria-selected="true">Masuk</button>
+        <button class="auth-tab" id="tab-register" type="button" role="tab" aria-selected="false">Daftar Akun</button>
+      </div>
+
+      <!-- Header Section -->
+      <div class="auth-header">
+        <h1 id="auth-title">Selamat Datang Kembali</h1>
+        <p id="auth-subtitle">Masuk untuk mengelola rencana menu &amp; gizi keluarga</p>
+      </div>
+
+      <!-- Error box -->
+      <div class="form-error hidden" id="auth-error" style="margin-bottom: 16px;"></div>
+
+      <!-- Login Form -->
+      <form class="auth-form" id="form-login">
+        <div class="field">
+          <label class="label" for="login-email">Email</label>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <input class="input" type="email" id="login-email" name="email" placeholder="nama@email.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="login-password">Kata Sandi</label>
+          <div class="input-icon" style="position: relative;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input class="input" type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password" />
+            <button type="button" class="pwd-toggle" data-target="login-password" aria-label="Lihat kata sandi">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-login" style="margin-top: 8px;">
+          <span>Masuk</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form class="auth-form hidden" id="form-register">
+        <div class="field">
+          <label class="label" for="reg-name">Nama Lengkap</label>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <input class="input" type="text" id="reg-name" name="name" placeholder="Misal: Sari Pratama" required minlength="2" autocomplete="name" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="reg-family">Nama Keluarga <span class="opt">(Opsional)</span></label>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <input class="input" type="text" id="reg-family" name="family_name" placeholder="Misal: Keluarga Pratama" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="reg-email">Email</label>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <input class="input" type="email" id="reg-email" name="email" placeholder="nama@email.com" required autocomplete="email" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="reg-password">Kata Sandi <span class="hint">(Min. 6 karakter)</span></label>
+          <div class="input-icon" style="position: relative;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <input class="input" type="password" id="reg-password" name="password" placeholder="••••••••" required minlength="6" autocomplete="new-password" />
+            <button type="button" class="pwd-toggle" data-target="reg-password" aria-label="Lihat kata sandi">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-lg" id="btn-submit-reg" style="margin-top: 8px;">
+          <span>Buat Akun Gratis</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <!-- Demo section -->
+      <div class="demo-divider">
+        <span>Atau coba tanpa daftar</span>
+      </div>
+
+      <button type="button" class="btn btn-outline btn-block" id="btn-demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+        </svg>
+        <span>Masuk sebagai Akun Demo (Keluarga Pratama)</span>
+      </button>
+
+      <div class="auth-footer" id="auth-switch-text">
+        Belum punya akun? <a href="#" id="link-switch">Daftar sekarang</a>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-wrap" id="toast-wrap"></div>
+
+  <script>
+    // Theme toggle
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem('ns_theme', next);
+      });
+    }
+
+    // Toast
+    function showToast(message, type = 'success') {
+      const wrap = document.getElementById('toast-wrap');
+      if (!wrap) return;
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      const icon = type === 'success'
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>`;
+      t.innerHTML = `${icon}<span>${message}</span>`;
+      wrap.appendChild(t);
+      setTimeout(() => {
+        t.classList.add('out');
+        setTimeout(() => t.remove(), 250);
+      }, 3500);
+    }
+
+    // Password visibility toggle
+    document.querySelectorAll('.pwd-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.dataset.target;
+        const input = document.getElementById(targetId);
+        if (!input) return;
+        const isPwd = input.type === 'password';
+        input.type = isPwd ? 'text' : 'password';
+        btn.innerHTML = isPwd
+          ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`
+          : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+              </svg>`;
+      });
+    });
+
+    // Tab state
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+    const formLogin = document.getElementById('form-login');
+    const formRegister = document.getElementById('form-register');
+    const authTitle = document.getElementById('auth-title');
+    const authSubtitle = document.getElementById('auth-subtitle');
+    const authSwitchText = document.getElementById('auth-switch-text');
+    const errBox = document.getElementById('auth-error');
+
+    function hideError() {
+      errBox.classList.add('hidden');
+      errBox.textContent = '';
+    }
+
+    function showError(msg) {
+      errBox.textContent = msg;
+      errBox.classList.remove('hidden');
+    }
+
+    function setMode(mode) {
+      hideError();
+      if (mode === 'register') {
+        tabLogin.classList.remove('active');
+        tabLogin.setAttribute('aria-selected', 'false');
+        tabRegister.classList.add('active');
+        tabRegister.setAttribute('aria-selected', 'true');
+        formLogin.classList.add('hidden');
+        formRegister.classList.remove('hidden');
+        authTitle.textContent = 'Mulai Perjalanan Gizi';
+        authSubtitle.textContent = 'Daftarkan keluarga Anda untuk menu seimbang setiap hari';
+        authSwitchText.innerHTML = 'Sudah memiliki akun? <a href="#" id="link-switch">Masuk di sini</a>';
+      } else {
+        tabRegister.classList.remove('active');
+        tabRegister.setAttribute('aria-selected', 'false');
+        tabLogin.classList.add('active');
+        tabLogin.setAttribute('aria-selected', 'true');
+        formRegister.classList.add('hidden');
+        formLogin.classList.remove('hidden');
+        authTitle.textContent = 'Selamat Datang Kembali';
+        authSubtitle.textContent = 'Masuk untuk mengelola rencana menu &amp; gizi keluarga';
+        authSwitchText.innerHTML = 'Belum punya akun? <a href="#" id="link-switch">Daftar sekarang</a>';
+      }
+      const ls = document.getElementById('link-switch');
+      if (ls) {
+        ls.addEventListener('click', (e) => {
+          e.preventDefault();
+          setMode(mode === 'register' ? 'login' : 'register');
+        });
+      }
+    }
+
+    tabLogin.addEventListener('click', () => setMode('login'));
+    tabRegister.addEventListener('click', () => setMode('register'));
+    const initialLink = document.getElementById('link-switch');
+    if (initialLink) {
+      initialLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        setMode('register');
+      });
+    }
+
+    // Check URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'daftar' || params.get('mode') === 'register') {
+      setMode('register');
+    }
+
+    // If already logged in, redirect
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.user) window.location.href = '/app.html';
+      })
+      .catch(() => {});
+
+    // Submit Login
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      const btn = document.getElementById('btn-submit-login');
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Memproses...`;
+
+      const payload = {
+        email: formLogin.email.value.trim(),
+        password: formLogin.password.value,
+      };
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Gagal masuk');
+        showToast('Berhasil masuk! Mengalihkan ke aplikasi...', 'success');
+        setTimeout(() => window.location.href = '/app.html', 500);
+      } catch (err) {
+        showError(err.message);
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    });
+
+    // Submit Register
+    formRegister.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      const btn = document.getElementById('btn-submit-reg');
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Membuat akun...`;
+
+      const payload = {
+        name: formRegister.name.value.trim(),
+        family_name: formRegister.family_name.value.trim() || undefined,
+        email: formRegister.email.value.trim(),
+        password: formRegister.password.value,
+      };
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Gagal mendaftar');
+        showToast('Akun berhasil dibuat! Mengalihkan...', 'success');
+        setTimeout(() => window.location.href = '/app.html', 500);
+      } catch (err) {
+        showError(err.message);
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    });
+
+    // Demo Button
+    const demoBtn = document.getElementById('btn-demo');
+    demoBtn.addEventListener('click', async () => {
+      hideError();
+      const orig = demoBtn.innerHTML;
+      demoBtn.disabled = true;
+      demoBtn.innerHTML = `<span class="spinner"></span> Memuat Demo...`;
+
+      try {
+        const res = await fetch('/api/auth/demo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Gagal masuk akun demo');
+        showToast('Berhasil masuk sebagai Keluarga Pratama! Mengalihkan...', 'success');
+        setTimeout(() => window.location.href = '/app.html', 500);
+      } catch (err) {
+        showError(err.message);
+        demoBtn.disabled = false;
+        demoBtn.innerHTML = orig;
+      }
+    });
+  </script>
+</body>
+</html>

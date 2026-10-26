@@ -1,0 +1,879 @@
+/* =========================================================================
+   NutriSmart — App Styling (Dashboard & Core Workflows)
+   ========================================================================= */
+
+/* Layout Shell */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--surface);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.25s var(--ease);
+}
+
+.topbar-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: all 0.2s var(--ease);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-tab-btn svg {
+  width: 17px;
+  height: 17px;
+  color: var(--text-3);
+  transition: color 0.2s;
+}
+
+.nav-tab-btn:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.nav-tab-btn.active {
+  background: var(--surface-solid);
+  color: var(--brand-700);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
+}
+
+[data-theme='dark'] .nav-tab-btn.active {
+  color: #6fe0ad;
+}
+
+.nav-tab-btn.active svg {
+  color: var(--brand);
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px 4px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.user-btn:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
+}
+
+.user-meta {
+  text-align: left;
+  line-height: 1.2;
+}
+
+.user-meta .fam-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.user-meta .u-name {
+  font-size: 11.5px;
+  color: var(--text-3);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 230px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: 8px;
+  z-index: 80;
+  animation: popIn 0.2s var(--spring);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-xs);
+  border: 0;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dropdown-item svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-3);
+}
+
+.dropdown-item:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.dropdown-item.danger {
+  color: var(--danger);
+}
+
+.dropdown-item.danger svg {
+  color: var(--danger);
+}
+
+.dropdown-item.danger:hover {
+  background: var(--danger-50);
+}
+
+/* App Main Container */
+.app-content {
+  flex: 1;
+  max-width: 1380px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+/* Sub-toolbar (Date picker / filter bar) */
+.sub-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.date-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-solid);
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+
+.date-nav-label {
+  font-size: 14px;
+  font-weight: 700;
+  padding: 0 8px;
+  white-space: nowrap;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Member filter pills */
+.member-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-solid);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.filter-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.filter-pill:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.filter-pill.active {
+  background: var(--brand-900);
+  border-color: var(--brand-900);
+  color: #fff;
+}
+
+[data-theme='dark'] .filter-pill.active {
+  background: var(--brand);
+  border-color: var(--brand);
+}
+
+/* Week Days Nav */
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.day-chip {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.day-chip:hover {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+}
+
+.day-chip.active {
+  border-color: var(--brand);
+  background: var(--brand-50);
+  box-shadow: 0 4px 14px -4px rgba(15, 157, 99, 0.4);
+}
+
+.day-chip .d-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+
+.day-chip.active .d-name {
+  color: var(--brand-700);
+}
+
+[data-theme='dark'] .day-chip.active .d-name {
+  color: #6fe0ad;
+}
+
+.day-chip .d-date {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 2px 0;
+  color: var(--text);
+}
+
+.day-chip .d-plate {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* Meal Planner Slots */
+.meals-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.meal-slot-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.meal-slot-card:hover {
+  border-color: var(--border-strong);
+}
+
+.meal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.meal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meal-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.meal-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.plate-status-badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.plate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  border: 1px dashed var(--border-strong);
+  color: var(--text-3);
+  opacity: 0.45;
+  transition: all 0.2s;
+}
+
+.plate-badge.present {
+  border-style: solid;
+  opacity: 1;
+}
+
+.plate-badge.p-pokok.present { background: var(--sun-50); color: #9a6200; border-color: rgba(245, 165, 36, 0.4); }
+.plate-badge.p-lauk.present { background: var(--rose-50); color: #b52240; border-color: rgba(225, 77, 107, 0.4); }
+.plate-badge.p-sayur.present { background: var(--brand-50); color: var(--brand-700); border-color: rgba(15, 157, 99, 0.4); }
+.plate-badge.p-buah.present { background: var(--accent-50); color: #d14d18; border-color: rgba(255, 122, 69, 0.4); }
+
+[data-theme='dark'] .plate-badge.p-pokok.present { color: #ffd680; }
+[data-theme='dark'] .plate-badge.p-lauk.present { color: #ff9cb1; }
+[data-theme='dark'] .plate-badge.p-sayur.present { color: #6fe0ad; }
+[data-theme='dark'] .plate-badge.p-buah.present { color: #ffad8a; }
+
+/* Meal food item rows */
+.meal-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.food-entry-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+
+.food-entry-row:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+
+.food-entry-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.status-toggle-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  background: var(--surface-solid);
+  color: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s var(--spring);
+  flex: none;
+}
+
+.status-toggle-btn.dimakan {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.status-toggle-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.food-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.food-info-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.food-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.food-nutri-badges {
+  display: flex;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-3);
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.food-nutri-badges span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.food-entry-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.member-portion-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-solid);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.member-portion-tag .m-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.food-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.food-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-3);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.food-action-btn:hover {
+  background: var(--surface-solid);
+  color: var(--text);
+}
+
+.food-action-btn.del:hover {
+  background: var(--danger-50);
+  color: var(--danger);
+}
+
+/* Daily Nutrition Summary Bar */
+.daily-summary-card {
+  margin-top: 24px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-item-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+/* Member Cards Grid */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.member-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  transition: all 0.2s var(--ease);
+}
+
+.member-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+.member-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.member-header-info {
+  flex: 1;
+}
+
+.member-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.member-meta-line {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.member-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+}
+
+.stat-cell .label {
+  font-size: 11px;
+  color: var(--text-3);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.stat-cell .val {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.akg-table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.akg-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.akg-row:last-child {
+  border-bottom: none;
+}
+
+.akg-row .k {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.akg-row .v {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Reports & Analytics */
+.report-score-hero {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .report-score-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gauge-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-right: 20px;
+  border-right: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .gauge-box {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+}
+
+.score-num {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.category-bars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.cat-bar-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+/* Shopping List */
+.shopping-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.shop-cat-card {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.shop-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.shop-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 6px;
+  border-radius: var(--radius-xs);
+  transition: background 0.15s;
+}
+
+.shop-item-row:hover {
+  background: var(--surface-2);
+}
+
+.shop-item-row.checked .shop-item-name {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.shop-check {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+.shop-item-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.shop-item-qty {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brand-700);
+}
+
+[data-theme='dark'] .shop-item-qty {
+  color: #6fe0ad;
+}
+
+/* Food Bank Directory */
+.food-filters-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.food-search-box {
+  width: 100%;
+  max-width: 320px;
+}
+
+.food-table-wrap {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.ns-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ns-table th {
+  background: var(--surface-2);
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border);
+}
+
+.ns-table td {
+  padding: 12px 16px;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.ns-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ns-table tr:hover td {
+  background: var(--surface-2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .topbar-inner {
+    flex-wrap: wrap;
+  }
+  .app-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+}

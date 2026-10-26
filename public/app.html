@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriSmart — Dashboard Perencana &amp; Pencatat Gizi Keluarga</title>
+  <meta name="description" content="Aplikasi perencana menu dan pemantau gizi keluarga berbasis AKG Kemenkes 2019 dan pedoman Isi Piringku." />
+  <meta name="theme-color" content="#0f9d63" />
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/app.css" />
+  <script>document.documentElement.dataset.theme = localStorage.getItem('ns_theme') || 'light';</script>
+</head>
+<body>
+  <div class="app-layout">
+    <!-- ============================ TOPBAR ============================ -->
+    <header class="app-topbar">
+      <div class="topbar-inner">
+        <a href="/app.html" class="logo" aria-label="NutriSmart Beranda Aplikasi">
+          <span class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+            </svg>
+          </span>
+          <span>Nutri<em>Smart</em></span>
+        </a>
+
+        <!-- Main Navigation Tabs -->
+        <nav class="app-nav" aria-label="Menu navigasi aplikasi">
+          <button class="nav-tab-btn active" data-tab="plans" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            <span>Rencana Menu</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="members" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/>
+            </svg>
+            <span>Anggota Keluarga</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="reports" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 20V10M12 20V4M6 20v-6"/>
+            </svg>
+            <span>Laporan Gizi</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="shopping" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+            <span>Daftar Belanja</span>
+          </button>
+
+          <button class="nav-tab-btn" data-tab="foods" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/>
+            </svg>
+            <span>Bank Pangan</span>
+          </button>
+        </nav>
+
+        <!-- Right Side User Menu & Theme -->
+        <div class="flex items-center gap-2">
+          <button class="btn btn-ghost btn-icon btn-sm" id="theme-toggle" aria-label="Ganti tema terang/gelap">
+            <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+            <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+            </svg>
+          </button>
+
+          <div class="user-menu">
+            <button class="user-btn" id="user-menu-btn" type="button">
+              <span class="avatar avatar-sm" id="top-user-avatar" style="--c:var(--brand)">U</span>
+              <div class="user-meta hide-sm">
+                <div class="fam-name" id="top-fam-name">Keluarga</div>
+                <div class="u-name" id="top-user-name">Pengguna</div>
+              </div>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div class="user-dropdown hidden" id="user-dropdown">
+              <button class="dropdown-item" id="btn-edit-profile" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Edit Profil &amp; Keluarga</span>
+              </button>
+              <a href="/" class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span>Beranda Utama</span>
+              </a>
+              <div class="divider" style="margin:4px 0;"></div>
+              <button class="dropdown-item danger" id="btn-logout" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Keluar Akun</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================ MAIN CONTENT ============================ -->
+    <main class="app-content">
+      <!-- -------------------------- TAB 1: RENCANA MENU ------------------------- -->
+      <section class="tab-view" id="view-plans">
+        <div class="sub-toolbar">
+          <div class="flex items-center gap-2 wrap">
+            <div class="date-nav">
+              <button class="btn btn-ghost btn-icon btn-sm" onclick="prevWeek()" title="Pekan Sebelumnya">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <span class="date-nav-label" id="date-range-label">Memuat tanggal...</span>
+              <button class="btn btn-ghost btn-icon btn-sm" onclick="nextWeek()" title="Pekan Selanjutnya">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="thisWeek()">Pekan Ini</button>
+          </div>
+
+          <div class="toolbar-actions">
+            <button class="btn btn-primary btn-sm" onclick="openAddMenuModal('sarapan')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              <span>Tambah Menu</span>
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="openGeneratorModal()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+              <span>Generator Seimbang</span>
+            </button>
+            <button class="btn btn-ghost btn-sm" onclick="openCopyModal()" title="Salin menu ke pekan lain">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="hide-sm">Salin Menu</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Week Strip Nav -->
+        <div class="week-strip" id="week-strip"></div>
+
+        <!-- Member Filter Pills -->
+        <div class="flex items-center gap-2 mb-4" style="margin-bottom: 20px;">
+          <span class="text-xs muted fw-700 uppercase" style="letter-spacing:0.04em;">Filter Anggota:</span>
+          <div class="member-filters" id="member-filters"></div>
+        </div>
+
+        <!-- Meals Container -->
+        <div class="meals-container" id="meals-container"></div>
+
+        <!-- Daily Nutrition Summary Bar -->
+        <div class="daily-summary-card fade-up" id="daily-nutri-summary"></div>
+      </section>
+
+      <!-- -------------------------- TAB 2: ANGGOTA KELUARGA --------------------- -->
+      <section class="tab-view hidden" id="view-members">
+        <div class="sub-toolbar">
+          <div>
+            <div class="flex items-center gap-3">
+              <h1 style="font-size: 22px; font-weight: 800;" id="fam-title-members">Keluarga Pratama</h1>
+              <span class="badge badge-green" id="members-count-badge">4 Anggota</span>
+            </div>
+            <p class="muted text-sm mt-1">Kebutuhan gizi dihitung otomatis berdasarkan Permenkes RI No. 28/2019 (AKG Indonesia).</p>
+          </div>
+          <button class="btn btn-primary" onclick="openAddMemberModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Tambah Anggota</span>
+          </button>
+        </div>
+
+        <div class="members-grid" id="members-grid"></div>
+      </section>
+
+      <!-- -------------------------- TAB 3: LAPORAN GIZI ------------------------- -->
+      <section class="tab-view hidden" id="view-reports">
+        <div class="sub-toolbar">
+          <div>
+            <h1 style="font-size: 22px; font-weight: 800;">Laporan &amp; Evaluasi Gizi</h1>
+            <p class="muted text-sm mt-1">Analisis kecukupan asupan pangan dan kepatuhan pedoman "Isi Piringku".</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="seg">
+              <button type="button" class="active" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active'); loadReports(7);">7 Hari</button>
+              <button type="button" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active'); loadReports(14);">14 Hari</button>
+              <button type="button" onclick="this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active'); loadReports(30);">30 Hari</button>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="window.print()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>Cetak</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="report-content"></div>
+      </section>
+
+      <!-- -------------------------- TAB 4: DAFTAR BELANJA ----------------------- -->
+      <section class="tab-view hidden" id="view-shopping">
+        <div class="sub-toolbar">
+          <div>
+            <div class="flex items-center gap-3">
+              <h1 style="font-size: 22px; font-weight: 800;">Daftar Belanja Keluarga</h1>
+              <span class="badge badge-sun" id="shop-range-label">Pekan Ini</span>
+            </div>
+            <p class="muted text-sm mt-1">Agregasi bahan pangan yang dibutuhkan dari seluruh menu makan pekan ini.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="btn btn-primary btn-sm" onclick="copyShoppingList()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Salin ke WhatsApp/Catatan</span>
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="window.print()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>Cetak</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="shopping-grid" id="shopping-grid"></div>
+      </section>
+
+      <!-- -------------------------- TAB 5: BANK PANGAN -------------------------- -->
+      <section class="tab-view hidden" id="view-foods">
+        <div class="sub-toolbar">
+          <div>
+            <div class="flex items-center gap-3">
+              <h1 style="font-size: 22px; font-weight: 800;">Bank Data Pangan Indonesia</h1>
+              <span class="badge badge-green" id="food-count-badge">85+ Bahan</span>
+            </div>
+            <p class="muted text-sm mt-1">Nilai gizi siap santap per 100 gram mengacu pada TKPI Kemenkes RI.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openAddFoodModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Tambah Pangan Kustom</span>
+          </button>
+        </div>
+
+        <div class="food-filters-bar">
+          <div class="chips">
+            <button type="button" class="chip food-cat-chip active" data-cat="all" onclick="filterFoodCategory('all')">Semua</button>
+            <button type="button" class="chip food-cat-chip" data-cat="pokok" onclick="filterFoodCategory('pokok')">🍚 Makanan Pokok</button>
+            <button type="button" class="chip food-cat-chip" data-cat="lauk_hewani" onclick="filterFoodCategory('lauk_hewani')">🍗 Lauk Hewani</button>
+            <button type="button" class="chip food-cat-chip" data-cat="lauk_nabati" onclick="filterFoodCategory('lauk_nabati')">🧈 Lauk Nabati</button>
+            <button type="button" class="chip food-cat-chip" data-cat="sayur" onclick="filterFoodCategory('sayur')">🥦 Sayuran</button>
+            <button type="button" class="chip food-cat-chip" data-cat="buah" onclick="filterFoodCategory('buah')">🍌 Buah-buahan</button>
+            <button type="button" class="chip food-cat-chip" data-cat="susu" onclick="filterFoodCategory('susu')">🥛 Susu &amp; Olahan</button>
+          </div>
+
+          <div class="food-search-box">
+            <input type="search" class="input" placeholder="🔍 Cari nama pangan..." oninput="onFoodSearchInput(this.value)" />
+          </div>
+        </div>
+
+        <div class="food-table-wrap">
+          <table class="ns-table">
+            <thead>
+              <tr>
+                <th>Nama Bahan &amp; Porsi Standar</th>
+                <th>Kategori</th>
+                <th>Energi</th>
+                <th>Protein</th>
+                <th>Lemak</th>
+                <th>Karbo</th>
+                <th>Serat</th>
+                <th style="text-align:right;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="food-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ============================ MODALS ============================ -->
+
+  <!-- Modal Tambah Menu Makanan -->
+  <div class="modal-backdrop hidden" id="modal-add-menu">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <div>
+          <h2>Tambah Menu Makanan</h2>
+          <p>Tentukan pangan dan porsi untuk anggota keluarga</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-add-menu')">✕</button>
+      </div>
+      <form onsubmit="submitAddMenu(event)">
+        <div class="modal-body">
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Tanggal</label>
+              <input type="date" class="input" id="add-menu-date" required />
+            </div>
+            <div class="field">
+              <label class="label">Waktu Makan</label>
+              <select class="select" id="add-menu-meal">
+                <option value="sarapan">☀️ Sarapan</option>
+                <option value="siang">🍲 Makan Siang</option>
+                <option value="malam">🌙 Makan Malam</option>
+                <option value="camilan">🍎 Camilan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field mb-4">
+            <label class="label">Pilih Pangan</label>
+            <select class="select" id="add-menu-food" required></select>
+          </div>
+
+          <div class="field">
+            <label class="label">Porsi untuk Anggota Keluarga <span class="hint">(dihitung proporsional AKG)</span></label>
+            <div id="add-menu-members" style="max-height: 240px; overflow-y: auto;"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-add-menu')">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-add-menu">Simpan ke Rencana</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Generator Seimbang -->
+  <div class="modal-backdrop hidden" id="modal-generate">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2>Generator Menu Seimbang</h2>
+          <p>Otomatisasi susunan menu berdasarkan Isi Piringku Kemenkes RI</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-generate')">✕</button>
+      </div>
+      <form onsubmit="submitGenerate(event)">
+        <div class="modal-body">
+          <div class="field mb-3">
+            <label class="label">Tanggal Mulai</label>
+            <input type="date" class="input" id="gen-start-date" required />
+          </div>
+          <div class="field mb-3">
+            <label class="label">Jumlah Hari</label>
+            <select class="select" id="gen-days">
+              <option value="1">1 Hari (Harian)</option>
+              <option value="3">3 Hari</option>
+              <option value="7" selected>7 Hari (1 Pekan Penuh)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="gen-replace" checked />
+              <span>Ganti/timpa menu yang sudah ada pada rentang tanggal tersebut</span>
+            </label>
+          </div>
+          <div class="mt-3 p-3 text-xs muted" style="background:var(--surface-2); border-radius:var(--radius-sm); border:1px solid var(--border);">
+            💡 <b>Bagaimana Generator Bekerja:</b> Sistem akan memilih kombinasi Makanan Pokok, Lauk Hewani, Lauk Nabati, Sayuran, dan Buah secara acak seimbang setiap waktu makan. Porsi setiap anggota otomatis disesuaikan dengan kebutuhan energi AKG masing-masing.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-generate')">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-gen">Jalankan Generator</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Salin Menu -->
+  <div class="modal-backdrop hidden" id="modal-copy">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2>Salin Menu Makanan</h2>
+          <p>Salin susunan menu ke rentang pekan lain</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-copy')">✕</button>
+      </div>
+      <form onsubmit="submitCopy(event)">
+        <div class="modal-body">
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Tanggal Sumber</label>
+              <input type="date" class="input" id="copy-from-date" required />
+            </div>
+            <div class="field">
+              <label class="label">Tanggal Tujuan</label>
+              <input type="date" class="input" id="copy-to-date" required />
+            </div>
+          </div>
+          <div class="field mb-3">
+            <label class="label">Durasi (Hari)</label>
+            <input type="number" class="input" id="copy-days" value="7" min="1" max="14" required />
+          </div>
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" id="copy-replace" checked />
+              <span>Timpa menu di tanggal tujuan jika sudah ada</span>
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-copy')">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-copy">Salin Menu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Anggota Keluarga -->
+  <div class="modal-backdrop hidden" id="modal-member">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <div>
+          <h2 id="modal-member-title">Tambah Anggota Keluarga</h2>
+          <p>Masukkan profil fisik untuk perhitungan AKG yang akurat</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-member')">✕</button>
+      </div>
+      <form id="form-member" onsubmit="submitMemberForm(event)">
+        <input type="hidden" id="member-id" />
+        <div class="modal-body">
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Nama Lengkap / Panggilan</label>
+              <input type="text" class="input" id="member-name" required placeholder="Misal: Budi" />
+            </div>
+            <div class="field">
+              <label class="label">Peran dalam Keluarga</label>
+              <select class="select" id="member-role">
+                <option value="Ayah">Ayah</option>
+                <option value="Ibu">Ibu</option>
+                <option value="Anak">Anak</option>
+                <option value="Kakek">Kakek</option>
+                <option value="Nenek">Nenek</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Jenis Kelamin</label>
+              <select class="select" id="member-gender">
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="label">Tanggal Lahir</label>
+              <input type="date" class="input" id="member-birth" required />
+            </div>
+          </div>
+
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Berat Badan <span class="opt">(kg)</span></label>
+              <input type="number" step="0.1" class="input" id="member-weight" placeholder="Misal: 65" min="2" max="300" />
+            </div>
+            <div class="field">
+              <label class="label">Tinggi Badan <span class="opt">(cm)</span></label>
+              <input type="number" step="0.5" class="input" id="member-height" placeholder="Misal: 170" min="40" max="250" />
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label class="label">Warna Avatar</label>
+              <input type="color" class="input" id="member-color" value="#0f9d63" style="padding:4px; height:44px;" />
+            </div>
+            <div class="field">
+              <label class="label">Target Energi Kustom <span class="opt">(Opsional, kkal)</span></label>
+              <input type="number" class="input" id="member-target-kcal" placeholder="Kosongkan untuk otomatis AKG" min="500" max="5000" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-member')">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-member">Simpan Anggota</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Pangan Kustom -->
+  <div class="modal-backdrop hidden" id="modal-food">
+    <div class="modal modal-md">
+      <div class="modal-header">
+        <div>
+          <h2>Tambah Bahan Pangan Kustom</h2>
+          <p>Masukkan kandungan gizi per 100 gram bagian siap santap</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-food')">✕</button>
+      </div>
+      <form id="form-food" onsubmit="submitFoodForm(event)">
+        <div class="modal-body">
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Nama Pangan</label>
+              <input type="text" class="input" id="food-name" required placeholder="Misal: Nasi Jagung Madura" />
+            </div>
+            <div class="field">
+              <label class="label">Kelompok Pangan</label>
+              <select class="select" id="food-category" required>
+                <option value="pokok">🍚 Makanan Pokok</option>
+                <option value="lauk_hewani">🍗 Lauk Hewani</option>
+                <option value="lauk_nabati">🧈 Lauk Nabati</option>
+                <option value="sayur">🥦 Sayuran</option>
+                <option value="buah">🍌 Buah-buahan</option>
+                <option value="susu">🥛 Susu &amp; Olahan</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid mb-3">
+            <div class="field">
+              <label class="label">Nama Takaran Porsi</label>
+              <input type="text" class="input" id="food-portion-name" placeholder="Misal: mangkuk / potong / centong" />
+            </div>
+            <div class="field">
+              <label class="label">Berat Takaran <span class="opt">(gram)</span></label>
+              <input type="number" class="input" id="food-portion-grams" value="100" min="5" max="1000" />
+            </div>
+          </div>
+
+          <div style="font-size:12.5px; font-weight:700; color:var(--text-3); text-transform:uppercase; margin:12px 0 8px;">
+            Kandungan Gizi per 100g Bagian Siap Santap
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label class="label">Energi (kkal)</label>
+              <input type="number" step="0.1" class="input" id="food-kcal" required placeholder="0" />
+            </div>
+            <div class="field">
+              <label class="label">Protein (g)</label>
+              <input type="number" step="0.1" class="input" id="food-protein" placeholder="0" />
+            </div>
+            <div class="field">
+              <label class="label">Lemak (g)</label>
+              <input type="number" step="0.1" class="input" id="food-fat" placeholder="0" />
+            </div>
+            <div class="field">
+              <label class="label">Karbohidrat (g)</label>
+              <input type="number" step="0.1" class="input" id="food-carbs" placeholder="0" />
+            </div>
+            <div class="field span-2">
+              <label class="label">Serat (g)</label>
+              <input type="number" step="0.1" class="input" id="food-fiber" placeholder="0" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-food')">Batal</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-food">Simpan Pangan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Edit Profil -->
+  <div class="modal-backdrop hidden" id="modal-profile">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2>Edit Profil Keluarga</h2>
+          <p>Ubah nama akun atau identitas keluarga Anda</p>
+        </div>
+        <button class="btn btn-ghost btn-icon btn-sm" onclick="closeModal('modal-profile')">✕</button>
+      </div>
+      <form onsubmit="submitProfileForm(event)">
+        <div class="modal-body">
+          <div class="field mb-3">
+            <label class="label">Nama Pengguna</label>
+            <input type="text" class="input" id="prof-name" required />
+          </div>
+          <div class="field">
+            <label class="label">Nama Keluarga</label>
+            <input type="text" class="input" id="prof-family" required placeholder="Misal: Keluarga Pratama" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modal-profile')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Profil</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toast-wrap"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>

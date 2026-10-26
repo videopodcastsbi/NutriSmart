@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriSmart — Perencana Menu Gizi Seimbang untuk Keluarga Indonesia</title>
+  <meta name="description" content="NutriSmart membantu keluarga Indonesia merencanakan dan mencatat menu harian & mingguan sesuai Angka Kecukupan Gizi (AKG) dan pedoman Isi Piringku. Gratis, mudah, dan berbasis data." />
+  <meta name="theme-color" content="#0f9d63" />
+  <meta property="og:title" content="NutriSmart — Gizi Seimbang Keluarga, Direncanakan dengan Cerdas" />
+  <meta property="og:description" content="Perencana & pencatat menu gizi keluarga berbasis AKG Kemenkes 2019 dan Isi Piringku." />
+  <meta property="og:image" content="/img/hero-meal.jpg" />
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <script>
+    document.documentElement.dataset.theme = localStorage.getItem('ns_theme') || 'light';
+    if (sessionStorage.getItem('ns_intro_seen') === 'true' || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.classList.add('skip-intro');
+    }
+  </script>
+</head>
+<body>
+  <!-- ==================== CINEMATIC OPENING INTRO ANIMATION ==================== -->
+  <div id="intro-screen" class="ns-intro" role="dialog" aria-modal="true" aria-label="NutriSmart Cinematic Opening">
+    <!-- Interactive Bioluminescent Canvas -->
+    <canvas id="intro-canvas" class="intro-canvas"></canvas>
+
+    <!-- Ambient Glowing Backdrops & Light Beams -->
+    <div class="intro-backdrop">
+      <div class="intro-glow-orb orb-1"></div>
+      <div class="intro-glow-orb orb-2"></div>
+      <div class="intro-glow-orb orb-3"></div>
+      <div class="intro-beam-light"></div>
+      <div class="intro-grid-pattern"></div>
+    </div>
+
+    <!-- Top Bar Controls -->
+    <div class="intro-topbar">
+      <div class="intro-badge-top">
+        <span class="intro-pulse-dot"></span>
+        <span class="badge-text">NutriSmart Experience</span>
+      </div>
+      <div class="intro-top-actions">
+        <button id="intro-sound-toggle" class="intro-icon-btn" aria-label="Nyalakan/matikan audio" title="Efek Suara Bioskop">
+          <svg class="sound-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+          <svg class="sound-off-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          <span class="sound-label">Audio</span>
+        </button>
+        <button id="intro-skip" class="intro-skip-btn" aria-label="Lewati animasi" title="Lewati animasi (Esc)">
+          <span>Lewati</span>
+          <kbd class="intro-kbd">Esc</kbd>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 17 5-5-5-5M6 17l5-5-5-5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Stage: 3D Holographic Plate & Brand Presentation -->
+    <div class="intro-center">
+      <!-- 3D Holographic Stage -->
+      <div class="intro-stage-3d">
+        <!-- Orbiting Energy Rings -->
+        <div class="intro-orbital-ring ring-outer"></div>
+        <div class="intro-orbital-ring ring-mid"></div>
+
+        <!-- 4 Orbiting Food Nodes (Isi Piringku) -->
+        <div class="intro-food-orbit">
+          <div class="food-node node-1" data-quadrant="carb">
+            <span class="node-emoji">🍚</span>
+            <div class="node-info">
+              <span class="node-title">Makanan Pokok</span>
+              <span class="node-sub">Karbohidrat 33%</span>
+            </div>
+          </div>
+          <div class="food-node node-2" data-quadrant="veg">
+            <span class="node-emoji">🥦</span>
+            <div class="node-info">
+              <span class="node-title">Sayuran</span>
+              <span class="node-sub">Serat &amp; Mineral 33%</span>
+            </div>
+          </div>
+          <div class="food-node node-3" data-quadrant="prot">
+            <span class="node-emoji">🍗</span>
+            <div class="node-info">
+              <span class="node-title">Lauk Pauk</span>
+              <span class="node-sub">Protein 17%</span>
+            </div>
+          </div>
+          <div class="food-node node-4" data-quadrant="fruit">
+            <span class="node-emoji">🍎</span>
+            <div class="node-info">
+              <span class="node-title">Buah-Buahan</span>
+              <span class="node-sub">Vitamin 17%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Holographic Isi Piringku Plate Disc -->
+        <div class="intro-plate-disc">
+          <div class="plate-glass-rim"></div>
+          <div class="plate-inner-grid"></div>
+
+          <!-- Neon Arcs SVG for 4 Isi Piringku quadrants -->
+          <svg class="plate-arcs-svg" viewBox="0 0 240 240">
+            <defs>
+              <linearGradient id="arcGradCarb" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ea580c"/>
+              </linearGradient>
+              <linearGradient id="arcGradVeg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#059669"/>
+              </linearGradient>
+              <linearGradient id="arcGradProt" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fb7185"/><stop offset="100%" stop-color="#e11d48"/>
+              </linearGradient>
+              <linearGradient id="arcGradFruit" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#2563eb"/>
+              </linearGradient>
+              <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <!-- 4 segmented perimeter arcs (Circumference ~ 691px) -->
+            <!-- Makanan Pokok: ~33% (225px) -->
+            <circle class="arc-seg arc-carb" cx="120" cy="120" r="110" stroke="url(#arcGradCarb)" stroke-width="7" stroke-dasharray="215 476" stroke-dashoffset="0" stroke-linecap="round" fill="none" filter="url(#neonGlow)"/>
+            <!-- Sayuran: ~33% (225px) -->
+            <circle class="arc-seg arc-veg" cx="120" cy="120" r="110" stroke="url(#arcGradVeg)" stroke-width="7" stroke-dasharray="215 476" stroke-dashoffset="-230" stroke-linecap="round" fill="none" filter="url(#neonGlow)"/>
+            <!-- Lauk Pauk: ~17% (110px) -->
+            <circle class="arc-seg arc-prot" cx="120" cy="120" r="110" stroke="url(#arcGradProt)" stroke-width="7" stroke-dasharray="105 586" stroke-dashoffset="-460" stroke-linecap="round" fill="none" filter="url(#neonGlow)"/>
+            <!-- Buah-Buahan: ~17% (110px) -->
+            <circle class="arc-seg arc-fruit" cx="120" cy="120" r="110" stroke="url(#arcGradFruit)" stroke-width="7" stroke-dasharray="105 586" stroke-dashoffset="-575" stroke-linecap="round" fill="none" filter="url(#neonGlow)"/>
+          </svg>
+
+          <!-- Core Floating Shield Emblem -->
+          <div class="intro-core-emblem">
+            <div class="emblem-inner-glow"></div>
+            <div class="emblem-glass-card">
+              <svg class="intro-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="introGradCinematic" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#4ade80" />
+                    <stop offset="50%" stop-color="#10b981" />
+                    <stop offset="100%" stop-color="#047857" />
+                  </linearGradient>
+                </defs>
+                <rect width="32" height="32" rx="10" fill="url(#introGradCinematic)"/>
+                <path class="intro-leaf-body" d="M16 25A9 9 0 0 1 14.5 7.1C21.8 5.7 23.7 5 26.3 1.8c1.3 2.6 2.6 5.4 2.6 10.3 0 7.1-6.1 12.9-12.9 12.9Z" fill="#ffffff" fill-opacity="0.95" transform="scale(0.8) translate(4, 4)"/>
+                <path class="intro-leaf-vein" d="M4.5 26.3c0-3.9 2.4-6.9 6.5-7.7 3.1-.6 6.3-2.6 7.6-3.9" stroke="#10b981" stroke-width="2.6" stroke-linecap="round" fill="none" transform="scale(0.8) translate(4, 4)"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography & Kinetic 3D Letter Reveal -->
+      <div class="intro-text-group">
+        <div class="intro-eyebrow">
+          <span class="intro-dot"></span>
+          <span>NUTRITION &amp; HOUSEHOLD SECURITY · AKG 2019</span>
+        </div>
+        <h1 class="intro-brand" aria-label="NutriSmart">
+          <span class="brand-word word-nutri">
+            <span class="char" style="--ci:0">N</span><span class="char" style="--ci:1">u</span><span class="char" style="--ci:2">t</span><span class="char" style="--ci:3">r</span><span class="char" style="--ci:4">i</span>
+          </span>
+          <span class="brand-word word-smart">
+            <span class="char" style="--ci:5">S</span><span class="char" style="--ci:6">m</span><span class="char" style="--ci:7">a</span><span class="char" style="--ci:8">r</span><span class="char" style="--ci:9">t</span>
+          </span>
+        </h1>
+        <p class="intro-tagline">Gizi Seimbang Keluarga Indonesia, Direncanakan dengan Cerdas</p>
+      </div>
+
+      <!-- Futuristic Glassmorphic Progress Console -->
+      <div class="intro-progress-console">
+        <div class="console-header">
+          <span class="console-label">SYSTEM SYNCHRONIZING</span>
+          <span class="console-val" id="intro-percent-text">0%</span>
+        </div>
+        <div class="intro-progress-track">
+          <div class="intro-progress-bar" id="intro-progress-bar">
+            <span class="progress-glow-head"></span>
+          </div>
+        </div>
+        <div class="console-footer">
+          <span class="intro-status-pulse"></span>
+          <span class="intro-status-text" id="intro-status-text">Memuat sistem nutrisi cerdas...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom interactive hint -->
+    <div class="intro-bottom-hint">
+      <span>✦ Gerakkan kursor atau klik layar untuk menyebarkan partikel nutrisi</span>
+    </div>
+  </div>
+
+  <!-- ============================ NAV ============================ -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="logo" aria-label="NutriSmart beranda">
+        <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+        <span>Nutri<em>Smart</em></span>
+      </a>
+      <nav class="nav-links" id="nav-links" aria-label="Navigasi utama">
+        <a href="#fitur">Fitur</a>
+        <a href="#cara-kerja">Cara Kerja</a>
+        <a href="#isi-piringku">Isi Piringku</a>
+        <a href="#faq">FAQ</a>
+        <div class="nav-mobile-actions show-sm">
+          <a href="/auth.html" class="btn btn-outline btn-block" id="nav-mobile-login">Masuk</a>
+          <a href="/auth.html?mode=daftar" class="btn btn-primary btn-block" id="nav-mobile-register">Daftar Gratis</a>
+        </div>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-ghost btn-sm intro-replay-trigger hide-sm" id="replay-intro-btn" title="Putar ulang animasi pembukaan" aria-label="Putar ulang animasi pembukaan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:5px;"><path d="m15 12-8.5 5V7l8.5 5Z"/><path d="M19 7v10"/></svg>
+          <span>Animasi Intro</span>
+        </button>
+        <button class="btn btn-ghost btn-icon btn-sm" id="theme-toggle" aria-label="Ganti tema terang/gelap">
+          <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+        <a href="/auth.html" class="btn btn-ghost btn-sm hide-sm" id="nav-login">Masuk</a>
+        <a href="/auth.html?mode=daftar" class="btn btn-primary btn-sm hide-sm" id="nav-register">Daftar Gratis</a>
+        <button class="btn btn-ghost btn-icon btn-sm nav-burger" id="nav-burger" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="nav-links">
+          <svg class="burger-open-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          <svg class="burger-close-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+  <main>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow fade-up"><span class="dot"></span> Nutrition &amp; Household Security</span>
+          <h1 class="fade-up" style="animation-delay:.05s">Gizi seimbang keluarga, <span class="grad-text">direncanakan dengan cerdas.</span></h1>
+          <p class="lead fade-up" style="animation-delay:.1s">
+            Susun dan catat menu harian &amp; mingguan untuk setiap anggota keluarga. NutriSmart menghitung kebutuhan gizi
+            berdasarkan <strong>AKG Kemenkes 2019</strong> dan memastikan setiap piring sesuai pedoman <strong>Isi Piringku</strong>.
+          </p>
+          <div class="hero-cta fade-up" style="animation-delay:.15s">
+            <a href="/auth.html?mode=daftar" class="btn btn-primary btn-lg" id="hero-start">
+              Mulai Rencanakan Menu
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <button class="btn btn-outline btn-lg" id="hero-demo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+              Coba Akun Demo
+            </button>
+          </div>
+          <ul class="hero-points fade-up" style="animation-delay:.2s">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Gratis &amp; tanpa iklan</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 85+ pangan lokal Indonesia</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Porsi otomatis per anggota</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual fade-up" style="animation-delay:.15s">
+          <div class="hero-img-wrap">
+            <img src="/img/hero-meal.jpg" alt="Hidangan keluarga Indonesia bergizi seimbang: nasi, ayam bakar, tempe, tahu, sayur, dan buah" width="1024" height="1024" />
+          </div>
+
+          <div class="float-card fc-1">
+            <div class="ring-mini" style="--p:86"><span>86%</span></div>
+            <div>
+              <div class="fc-label">Energi hari ini</div>
+              <div class="fc-value">2.193 <small>/ 2.550 kkal</small></div>
+            </div>
+          </div>
+
+          <div class="float-card fc-2">
+            <div class="fc-label">Isi Piringku</div>
+            <div class="plate-dots">
+              <span title="Makanan pokok">🍚</span><span title="Lauk pauk">🍗</span><span title="Sayuran">🥦</span><span title="Buah">🍌</span>
+            </div>
+            <div class="fc-ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Piring lengkap</div>
+          </div>
+
+          <div class="float-card fc-3">
+            <div class="avatar-stack">
+              <span class="avatar avatar-sm" style="--c:#0f9d63">B</span>
+              <span class="avatar avatar-sm" style="--c:#e14d6b">S</span>
+              <span class="avatar avatar-sm" style="--c:#3b82f6">R</span>
+              <span class="avatar avatar-sm" style="--c:#f5a524">N</span>
+            </div>
+            <div>
+              <div class="fc-label">Keluarga Pratama</div>
+              <div class="fc-value sm">4 anggota · porsi disesuaikan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ STATS ============================ -->
+    <section class="stats" aria-label="Fakta gizi Indonesia">
+      <div class="container stats-grid">
+        <div class="stat reveal">
+          <div class="stat-num"><span data-count="21.5" data-decimals="1">0</span>%</div>
+          <p>Prevalensi stunting balita Indonesia <span class="src">(SKI 2023)</span></p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num"><span data-count="95.5" data-decimals="1">0</span>%</div>
+          <p>Penduduk ≥5 tahun kurang konsumsi sayur &amp; buah <span class="src">(Riskesdas 2018)</span></p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num"><span data-count="4">0</span></div>
+          <p>Kelompok pangan dalam satu piring sesuai pedoman Isi Piringku</p>
+        </div>
+        <div class="stat reveal">
+          <div class="stat-num"><span data-count="85">0</span>+</div>
+          <p>Pangan lokal dengan data gizi siap pakai di NutriSmart</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FEATURES ============================ -->
+    <section class="section" id="fitur">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow"><span class="dot"></span> Fitur Unggulan</span>
+          <h2>Semua yang dibutuhkan dapur keluarga sehat</h2>
+          <p>Dari merencanakan menu sepekan hingga memantau apakah si kecil sudah cukup protein — semua dalam satu tempat.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature feature-xl reveal">
+            <div class="feature-ic" style="--c:#0f9d63"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+            <h3>Perencana Menu Harian &amp; Mingguan</h3>
+            <p>Atur sarapan, makan siang, makan malam, dan camilan dalam tampilan kalender. Satu kali input untuk seluruh keluarga — porsi tiap anggota dihitung otomatis.</p>
+            <div class="mini-week" aria-hidden="true">
+              <div class="mw-col"><b>Sen</b><span class="mw-chip">🍚 Nasi merah</span><span class="mw-chip">🐟 Nila bakar</span><span class="mw-chip">🥦 Sayur sop</span></div>
+              <div class="mw-col"><b>Sel</b><span class="mw-chip">🍞 Roti gandum</span><span class="mw-chip">🥚 Telur rebus</span><span class="mw-chip">🍊 Jeruk</span></div>
+              <div class="mw-col"><b>Rab</b><span class="mw-chip">🍚 Nasi putih</span><span class="mw-chip">🌱 Tempe bacem</span><span class="mw-chip">🥬 Sayur asem</span></div>
+              <div class="mw-col today"><b>Kam</b><span class="mw-chip">🌽 Jagung</span><span class="mw-chip">🍗 Ayam bakar</span><span class="mw-chip">🍌 Pisang</span></div>
+            </div>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-ic" style="--c:#ff7a45"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <h3>Target AKG Personal</h3>
+            <p>Kebutuhan energi, protein, lemak, karbohidrat, dan serat dihitung sesuai usia &amp; jenis kelamin (Permenkes No. 28/2019).</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-ic" style="--c:#8b5cf6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg></div>
+            <h3>Generator Menu Seimbang</h3>
+            <p>Kehabisan ide? Buat menu sepekan otomatis yang memenuhi 4 kelompok pangan, lengkap dengan porsi per orang.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-ic" style="--c:#3b82f6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg></div>
+            <h3>Laporan &amp; Insight Gizi</h3>
+            <p>Grafik asupan harian vs target, skor Isi Piringku, dan rekomendasi otomatis bila ada zat gizi yang kurang.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-ic" style="--c:#f5a524"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+            <h3>Daftar Belanja Otomatis</h3>
+            <p>Kebutuhan bahan sepekan langsung terhitung dari rencana menu. Centang, cetak, atau bagikan ke WhatsApp.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-ic" style="--c:#e14d6b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+            <h3>Database Pangan Lokal</h3>
+            <p>85+ makanan sehari-hari — dari tempe bacem hingga sayur asem — dengan nilai gizi &amp; ukuran rumah tangga.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ HOW IT WORKS ============================ -->
+    <section class="section section-tint" id="cara-kerja">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow"><span class="dot"></span> Cara Kerja</span>
+          <h2>Tiga langkah menuju piring yang lebih sehat</h2>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <span class="step-num">1</span>
+            <h3>Tambahkan anggota keluarga</h3>
+            <p>Isi nama, tanggal lahir, dan jenis kelamin. NutriSmart langsung menentukan target gizi harian masing-masing.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-num">2</span>
+            <h3>Rencanakan menu</h3>
+            <p>Pilih makanan dari database atau gunakan generator otomatis. Porsi anak &amp; dewasa disesuaikan sendiri.</p>
+          </li>
+          <li class="step reveal">
+            <span class="step-num">3</span>
+            <h3>Catat &amp; pantau</h3>
+            <p>Tandai menu yang sudah dimakan, lalu lihat laporan pekanan untuk memperbaiki pola makan keluarga.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================ ISI PIRINGKU ============================ -->
+    <section class="section section-piring" id="isi-piringku">
+      <div class="container piring-grid">
+        <!-- Interactive 3D Ceramic Plate Showcase -->
+        <div class="piring-visual reveal">
+          <div class="plate-showcase-wrap">
+            <div class="plate-stage">
+              <!-- Ambient glow behind plate -->
+              <div class="plate-ambient-glow"></div>
+
+              <!-- 3D Ceramic Plate with Realistic Rims & Quadrants -->
+              <div class="plate-3d-ceramic" id="interactive-plate">
+                <div class="plate-ceramic-rim"></div>
+                <div class="plate-ceramic-inner">
+                  <!-- Shine sweep effect -->
+                  <div class="plate-shine-sweep"></div>
+
+                  <!-- 4 Interactive Slices with Spring 3D Lift -->
+                  <!-- 1. Makanan Pokok (Top-Left, 1/3 total) -->
+                  <div class="piring-slice s-pokok active" data-slice="pokok" role="button" tabindex="0" aria-label="Makanan Pokok 1/3 piring">
+                    <div class="slice-inner">
+                      <span class="slice-emoji" id="plate-emoji-pokok">🍚</span>
+                      <b class="slice-name">Makanan Pokok</b>
+                      <span class="slice-badge">⅓ Piring (33%)</span>
+                      <div class="slice-glow"></div>
+                    </div>
+                  </div>
+
+                  <!-- 2. Sayuran (Top-Right, 1/3 total) -->
+                  <div class="piring-slice s-sayur" data-slice="sayur" role="button" tabindex="0" aria-label="Sayuran 1/3 piring">
+                    <div class="slice-inner">
+                      <span class="slice-emoji" id="plate-emoji-sayur">🥦</span>
+                      <b class="slice-name">Sayuran</b>
+                      <span class="slice-badge">⅓ Piring (33%)</span>
+                      <div class="slice-glow"></div>
+                    </div>
+                  </div>
+
+                  <!-- 3. Lauk Pauk (Bottom-Left, 1/6 total) -->
+                  <div class="piring-slice s-lauk" data-slice="lauk" role="button" tabindex="0" aria-label="Lauk Pauk 1/6 piring">
+                    <div class="slice-inner">
+                      <span class="slice-emoji" id="plate-emoji-lauk">🍗</span>
+                      <b class="slice-name">Lauk Pauk</b>
+                      <span class="slice-badge">⅙ Piring (17%)</span>
+                      <div class="slice-glow"></div>
+                    </div>
+                  </div>
+
+                  <!-- 4. Buah-buahan (Bottom-Right, 1/6 total) -->
+                  <div class="piring-slice s-buah" data-slice="buah" role="button" tabindex="0" aria-label="Buah 1/6 piring">
+                    <div class="slice-inner">
+                      <span class="slice-emoji" id="plate-emoji-buah">🍌</span>
+                      <b class="slice-name">Buah-Buahan</b>
+                      <span class="slice-badge">⅙ Piring (17%)</span>
+                      <div class="slice-glow"></div>
+                    </div>
+                  </div>
+
+                  <!-- Center Quality Hub / Verified Balance -->
+                  <div class="plate-center-hub">
+                    <div class="hub-ring"></div>
+                    <div class="hub-core">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span>100% Gizi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plate Interactive Controls -->
+            <div class="plate-controls">
+              <span class="plate-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                Klik bagian piring untuk melihat detail
+              </span>
+              <button class="btn btn-ghost btn-sm plate-shuffle-btn" id="plate-shuffle-btn" title="Ganti contoh kombinasi pangan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;margin-right:4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                <span>Ganti Menu Contoh</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Content & Interactive Food Cards -->
+        <div class="reveal">
+          <span class="eyebrow"><span class="dot"></span> Pedoman Gizi Seimbang Kemenkes RI</span>
+          <h2 class="mt-3">Setiap piring dinilai dengan <span class="grad-text">Isi Piringku</span></h2>
+          <p class="lead mt-3">
+            Panduan resmi Kementerian Kesehatan RI untuk porsi makan sekali waktu. NutriSmart memeriksa setiap piring secara cerdas untuk memastikan komposisi gizi seimbang bagi seluruh keluarga.
+          </p>
+
+          <!-- 4 Interactive Cards with Live Sync -->
+          <div class="piring-interactive-cards" id="piring-cards-list">
+            <!-- 1. Makanan Pokok -->
+            <div class="piring-card card-pokok active" data-slice="pokok" role="button" tabindex="0">
+              <div class="card-edge-glow"></div>
+              <div class="card-header">
+                <div class="card-icon-wrap" style="--bg-c:#fef3c7; --tx-c:#d97706;">
+                  <span class="card-emoji" id="icon-pokok">🍚</span>
+                </div>
+                <div class="card-title-group">
+                  <div class="card-head-line">
+                    <h3 class="card-title">Makanan Pokok</h3>
+                    <span class="card-portion-pill">⅓ Porsi Piring</span>
+                  </div>
+                  <span class="card-function">Sumber Karbohidrat &amp; Energi Utama</span>
+                </div>
+              </div>
+              <p class="card-desc" id="desc-pokok">
+                Memberikan tenaga untuk aktivitas harian. Dianjurkan memvariasikan sumber karbohidrat kompleks.
+              </p>
+              <div class="card-food-chips" id="chips-pokok">
+                <span class="food-chip">Nasi Putih</span>
+                <span class="food-chip">Nasi Merah</span>
+                <span class="food-chip">Jagung</span>
+                <span class="food-chip">Ubi Jalar</span>
+                <span class="food-chip">Singkong</span>
+                <span class="food-chip">Kentang</span>
+              </div>
+            </div>
+
+            <!-- 2. Sayuran -->
+            <div class="piring-card card-sayur" data-slice="sayur" role="button" tabindex="0">
+              <div class="card-edge-glow"></div>
+              <div class="card-header">
+                <div class="card-icon-wrap" style="--bg-c:#d1fae5; --tx-c:#059669;">
+                  <span class="card-emoji" id="icon-sayur">🥦</span>
+                </div>
+                <div class="card-title-group">
+                  <div class="card-head-line">
+                    <h3 class="card-title">Sayuran</h3>
+                    <span class="card-portion-pill portion-green">⅓ Porsi Piring</span>
+                  </div>
+                  <span class="card-function">Serat, Vitamin, Mineral &amp; Imunitas</span>
+                </div>
+              </div>
+              <p class="card-desc" id="desc-sayur">
+                Menjaga pencernaan sehat dan menurunkan risiko penyakit degeneratif. Pilihlah sayuran beraneka warna.
+              </p>
+              <div class="card-food-chips" id="chips-sayur">
+                <span class="food-chip">Bayam</span>
+                <span class="food-chip">Kangkung</span>
+                <span class="food-chip">Sayur Asem</span>
+                <span class="food-chip">Wortel</span>
+                <span class="food-chip">Brokoli</span>
+                <span class="food-chip">Labu Siam</span>
+              </div>
+            </div>
+
+            <!-- 3. Lauk Pauk -->
+            <div class="piring-card card-lauk" data-slice="lauk" role="button" tabindex="0">
+              <div class="card-edge-glow"></div>
+              <div class="card-header">
+                <div class="card-icon-wrap" style="--bg-c:#ffe4e6; --tx-c:#e11d48;">
+                  <span class="card-emoji" id="icon-lauk">🍗</span>
+                </div>
+                <div class="card-title-group">
+                  <div class="card-head-line">
+                    <h3 class="card-title">Lauk Pauk</h3>
+                    <span class="card-portion-pill portion-red">⅙ Porsi Piring</span>
+                  </div>
+                  <span class="card-function">Protein Hewani &amp; Nabati untuk Otot &amp; Otak</span>
+                </div>
+              </div>
+              <p class="card-desc" id="desc-lauk">
+                Pembangun jaringan tubuh dan mencegah stunting pada anak. Seimbangkan protein hewani dan nabati.
+              </p>
+              <div class="card-food-chips" id="chips-lauk">
+                <span class="food-chip">Ikan Nila / Kembung</span>
+                <span class="food-chip">Tempe Bacem</span>
+                <span class="food-chip">Tahu</span>
+                <span class="food-chip">Ayam Bakar</span>
+                <span class="food-chip">Telur</span>
+              </div>
+            </div>
+
+            <!-- 4. Buah-Buahan -->
+            <div class="piring-card card-buah" data-slice="buah" role="button" tabindex="0">
+              <div class="card-edge-glow"></div>
+              <div class="card-header">
+                <div class="card-icon-wrap" style="--bg-c:#f3e8ff; --tx-c:#7c3aed;">
+                  <span class="card-emoji" id="icon-buah">🍌</span>
+                </div>
+                <div class="card-title-group">
+                  <div class="card-head-line">
+                    <h3 class="card-title">Buah-Buahan</h3>
+                    <span class="card-portion-pill portion-purple">⅙ Porsi Piring</span>
+                  </div>
+                  <span class="card-function">Vitamin Alami, Air &amp; Antioksidan</span>
+                </div>
+              </div>
+              <p class="card-desc" id="desc-buah">
+                Menyegarkan tubuh dan mengoptimalkan penyerapan zat gizi dengan vitamin C, kalium, dan serat larut.
+              </p>
+              <div class="card-food-chips" id="chips-buah">
+                <span class="food-chip">Pisang Ambon</span>
+                <span class="food-chip">Pepaya</span>
+                <span class="food-chip">Jeruk</span>
+                <span class="food-chip">Semangka</span>
+                <span class="food-chip">Melon</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="section section-tint" id="faq">
+      <div class="container faq-wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow"><span class="dot"></span> FAQ</span>
+          <h2>Pertanyaan yang sering diajukan</h2>
+        </div>
+        <div class="faq reveal">
+          <details open>
+            <summary>Dari mana data kebutuhan gizi diambil?</summary>
+            <p>Target harian mengacu pada Angka Kecukupan Gizi (AKG) dalam Peraturan Menteri Kesehatan RI Nomor 28 Tahun 2019, dikelompokkan berdasarkan usia dan jenis kelamin. Anda juga dapat menetapkan target energi khusus atas saran tenaga kesehatan.</p>
+          </details>
+          <details>
+            <summary>Bagaimana porsi tiap anggota keluarga dihitung?</summary>
+            <p>Porsi dasar disesuaikan dengan rasio kebutuhan energi tiap anggota terhadap orang dewasa rujukan (2.150 kkal). Contohnya, anak usia 4–6 tahun (1.400 kkal) mendapat sekitar 65% porsi dewasa.</p>
+          </details>
+          <details>
+            <summary>Apakah nilai gizi makanan akurat?</summary>
+            <p>Nilai gizi per 100 gram mengacu pada Tabel Komposisi Pangan Indonesia (TKPI) dan USDA FoodData Central, lalu dibulatkan. Hasilnya adalah estimasi untuk edukasi dan perencanaan, bukan pengganti konsultasi ahli gizi.</p>
+          </details>
+          <details>
+            <summary>Apakah data keluarga saya aman?</summary>
+            <p>Kata sandi disimpan dalam bentuk hash (scrypt) dan sesi menggunakan cookie HttpOnly. Data hanya dapat diakses oleh akun Anda sendiri.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA ============================ -->
+    <section class="section">
+      <div class="container">
+        <div class="cta reveal">
+          <div class="cta-copy">
+            <h2>Mulai minggu ini dengan menu yang lebih sehat.</h2>
+            <p>Daftar gratis dalam 30 detik, atau jelajahi akun demo Keluarga Pratama yang sudah berisi menu sepekan.</p>
+            <div class="hero-cta">
+              <a href="/auth.html?mode=daftar" class="btn btn-white btn-lg" id="cta-register">Daftar Gratis</a>
+              <button class="btn btn-glass btn-lg" id="cta-demo">Lihat Demo</button>
+            </div>
+          </div>
+          <img src="/img/family-kitchen.jpg" alt="Keluarga Indonesia memasak makanan sehat bersama di dapur" class="cta-img" loading="lazy" width="896" height="1200" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="/" class="logo">
+        <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
+        <span>Nutri<em>Smart</em></span>
+      </a>
+      <p class="muted text-sm">Dibuat untuk ketahanan gizi keluarga Indonesia · Data: AKG Permenkes 28/2019, TKPI Kemenkes RI.<br />Informasi bersifat edukatif dan tidak menggantikan saran tenaga kesehatan.</p>
+      <p class="muted text-sm">© <span id="year"></span> NutriSmart</p>
+    </div>
+  </footer>
+
+  <div class="toast-wrap" id="toast-wrap"></div>
+  <script type="module" src="/js/landing.js"></script>
+</body>
+</html>
